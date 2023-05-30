@@ -44,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addItem(cuerpoB4);
     scene->addItem(cuerpoB5);
 
+
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(Actualizar()));
     timer->start(1000);

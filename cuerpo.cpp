@@ -17,7 +17,7 @@ Cuerpo::Cuerpo(float _x, float _y, float _masa, float _rad, float _vx, float _vy
 
 QRectF Cuerpo::boundingRect() const
 {
-    return QRect(-radio, -radio, radio*2, radio*2);
+    return QRect(-radio/EX, -radio/EY, radio*2/EX, radio*2/EY);
 }
 
 void Cuerpo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -29,8 +29,10 @@ void Cuerpo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 void Cuerpo::aceleracion(const Cuerpo &c)
 {
 
-    this->ax=(G*c.getMasa()/(pow(c.getX()-this->x,2)+pow(c.getY()-this->y,2)))*cos(atan((c.getY()-this->y)/(c.getX()-this->x)));
-    this->ay=(G*c.getMasa()/(pow(c.getX()-this->x,2)+pow(c.getY()-this->y,2)))*sin(atan((c.getY()-this->y)/(c.getX()-this->x)));
+
+
+    this->ax += (G * c.getMasa() / (pow(c.getX() - this->x, 2) + pow(c.getY() - this->y, 2))) * cos(atan2(c.getY() - this->y, c.getX() - this->x));
+    this->ay += (G * c.getMasa() / (pow(c.getX() - this->x, 2) + pow(c.getY() - this->y, 2))) * sin(atan2(c.getY() - this->y, c.getX() - this->x));
     //qDebug()<<ax<<ay;
 }
 
@@ -47,6 +49,8 @@ void Cuerpo::posiciones()
 {
     x = x + (vx * DT) + (0.5 * ax * pow(DT,2));
     y = y + (vy * DT) + (0.5 * ay * pow(DT,2));
+    ax=0;
+    ay=0;
 
     //ajustando los cuadrantes
     setPos((x/EX), (-y/EY));

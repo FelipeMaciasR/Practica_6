@@ -1,8 +1,8 @@
 #ifndef CUERPO_H
 #define CUERPO_H
 
-#define EX 300
-#define EY 600
+#define EX 60
+#define EY 60
 
 #define G 1
 #define DT 1
